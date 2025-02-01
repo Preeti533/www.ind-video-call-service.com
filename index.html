@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IND VIDEO CALL SERVICE</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #1d0432, #4b0082);
+      color: white;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 10px;
+    }
+
+    .logo img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .start-button {
+      background-color: #ff007f;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .start-button:hover {
+      background-color: #e60072;
+    }
+
+    .image-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #1d0432, #4b0082);
+      padding: 20px;
+    }
+
+    .headline-container {
+      width: 100%;
+      background-color: red;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    .headline {
+      font-size: 22px;
+      font-weight: bold;
+      color: green;
+      margin: 0;
+    }
+
+    .image-container img {
+      width: 200px;
+      height: 200px;
+      margin: 10px;
+      border-radius: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .call-button {
+      background-color: #ff007f;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .call-button:hover {
+      background-color: #e60072;
+    }
+
+    /* Video Call Selection Page */
+    .video-call-selection {
+      display: none;
+      background: linear-gradient(180deg, #1d0432, #4b0082);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .call-pack {
+      margin: 15px;
+      padding: 20px;
+      border: 2px solid #fff;
+      border-radius: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .call-pack h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .call-pack p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .yes-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .yes-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .logo img {
+        width: 100px;
+        height: 100px;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+
+      .start-button {
+        padding: 12px 24px;
+        font-size: 16px;
+      }
+
+      .headline {
+        font-size: 18px;
+      }
+
+      .call-button {
+        padding: 12px 24px;
+        font-size: 16px;
+      }
+
+      .image-container img {
+        width: 180px;
+        height: 180px;
+      }
+    }
+
+    /* New Page Styling */
+    #paymentPage {
+      display: none;
+      background-color: #1d0432;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .qr-code img {
+      width: 200px;
+      height: 200px;
+      margin-top: 20px;
+    }
+
+    .whatsapp-number input {
+      width: 250px;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #fff;
+      background-color: #4b0082;
+      color: white;
+      font-size: 16px;
+    }
+
+    .payment-screenshot input {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #fff;
+      background-color: #4b0082;
+      color: white;
+      font-size: 16px;
+    }
+
+    .ok-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .ok-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Full Screen Image Container */
+    #fullScreenImage {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #fullScreenImage img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    #fullScreenImage button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 10px;
+    }
+    
+    /* Notice Section */
+    .notice {
+      background-color: #ffcc00;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 10px;
+      color: black;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="https://www.pic.surf/97m" alt="Logo">
+    </div>
+    <h1>IND VIDEO CALL SERVICE</h1>
+    <button class="start-button" onclick="showImagePage()">Start</button>
+  </div>
+
+  <div id="imagePage" class="image-container">
+    <div class="headline-container">
+      <div class="headline">IND VIDEO CALL SERVICE</div>
+    </div>
+
+    <div id="imageList">
+      <!-- Added 40 Image URLs -->
+      <!-- Repeated 40 Image URLs for demonstration -->
+      <div class="image-item">
+      <img src="https://www.pic.surf/5fj" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/5fj')" />
+      <h2>Arya</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/f9d" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/f9d')" />
+      <h2>Anvi</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/4p1" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/4p1')" />
+      <h2>Kiara</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/qbc" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/qbc')" />
+      <h2>Riddhi</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/o5lz" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/o5lz')" />
+      <h2>Tanvi</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/2vu" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/2vu')" />
+      <h2>Isha</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/5ui" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/5ui')" />
+      <h2>Ira</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/7j5" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/7j5')" />
+      <h2>Aashima</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/7t5" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/7t5')" />
+      <h2>Lavanya</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/fz8" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/fz8')" />
+      <h2>Naira</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/j9l" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/j9l')" />
+      <h2>Aditi</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/mg0" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/mg0')" />
+      <h2>Avya</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/jq6" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/jq6')" />
+      <h2>Siya</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/f46" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/f46')" />
+      <h2>Sameera</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/pgh" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/pgh')" />
+      <h2>Kartika</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/kpmj" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/kpmj')" />
+      <h2>Prisha</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/3l79" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/3l79')" />
+      <h2>Aarushi</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/a06u" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/a06u')" />
+      <h2>Kavya</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/qsj" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/qsj')" />
+      <h2>Kriti</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/urv" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/urv')" />
+      <h2>Ishita</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/vgd" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/vgd')" />
+      <h2>Divya</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/28g" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/28g')" />
+      <h2>Megha</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/hvl" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/hvl')" />
+      <h2>Shruti</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/9my" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/9my')" />
+      <h2>Neha</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+       <div class="image-item">
+      <img src="https://www.pic.surf/zug" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/zug')" />
+      <h2>Payal</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <div class="image-item">
+      <img src="https://www.pic.surf/boh" alt="Person 1" onclick="showFullScreenImage('https://www.pic.surf/boh')" />
+      <h2>Sandhya</h2>
+      <div class="buttons">
+        <button class="call-button" onclick="showVideoCallSelection()">Video Call</button>
+      </div>
+    </div>
+      <!-- Repeat above block for other images -->
+  
+      <!-- More images go here -->
+    </div>
+  </div>
+
+  <!-- Video Call Selection Page -->
+  <div id="videoCallSelectionPage" class="video-call-selection">
+    <div class="call-pack">
+      <h3>200₹ - 5 min Video Call</h3>
+      <p>No extra charge</p>
+      <button class="yes-button" onclick="selectPackage('200₹ - 5 min')">Yes</button>
+    </div>
+    <div class="call-pack">
+      <h3>300₹ - 10 min Video Call</h3>
+      <p>No extra charge</p>
+      <button class="yes-button" onclick="selectPackage('300₹ - 10 min')">Yes</button>
+    </div>
+    <div class="call-pack">
+      <h3>500₹ - 20 min Video Call</h3>
+      <p>No extra charge</p>
+      <button class="yes-button" onclick="selectPackage('500₹ - 20 min')">Yes</button>
+    </div>
+    <div class="call-pack">
+      <h3>1000₹ - 45 min Video Call</h3>
+      <p>No extra charge</p>
+      <button class="yes-button" onclick="selectPackage('1000₹ - 45 min')">Yes</button>
+    </div>
+  </div>
+
+  <!-- Payment Page -->
+  <div id="paymentPage">
+    <div class="qr-code">
+      <img src="https://www.pic.surf/maa" alt="QR Code">
+    </div>
+    <div class="whatsapp-number">
+      <label for="whatsappNumber">Enter Your WhatsApp Number:</label>
+      <input type="text" id="whatsappNumber" placeholder="Enter your WhatsApp number" required />
+    </div>
+    <div class="payment-screenshot">
+      <label for="paymentScreenshot">Upload Payment Screenshot:</label>
+      <input type="file" id="paymentScreenshot" required />
+    </div>
+    <button class="ok-button" onclick="confirmDetails()">OK</button>
+
+    <!-- Notice Section -->
+    <div class="notice">
+      <p>Note: Please ensure that you have made the payment and uploaded the correct screenshot before submitting. If you have any issues, contact our support team.</p>
+    </div>
+  </div>
+  <div id="fullScreenImage" onclick="closeFullScreenImage()">
+    <img id="fullscreenImg" src="" alt="Full Screen Image">
+    <button onclick="closeFullScreenImage()">Close</button>
+  </div>
+
+  <script>
+    function showImagePage() {
+      document.querySelector('.container').style.display = 'none';
+      document.getElementById('imagePage').style.display = 'flex';
+    }
+
+    function showFullScreenImage(imageSrc) {
+      document.getElementById('fullscreenImg').src = imageSrc;
+      document.getElementById('fullScreenImage').style.display = 'flex';
+    }
+
+    function closeFullScreenImage() {
+      document.getElementById('fullScreenImage').style.display = 'none';
+    }
+
+    function showVideoCallSelection() {
+      document.getElementById('imagePage').style.display = 'none';
+      document.getElementById('videoCallSelectionPage').style.display = 'block';
+    }
+
+    function selectPackage(packageName) {
+      alert('You selected: ' + packageName);
+      document.getElementById('videoCallSelectionPage').style.display = 'none';
+      document.getElementById('paymentPage').style.display = 'block';
+    }
+
+    function submitPayment() {
+      alert('Payment submitted successfully!');
+      // Implement further payment submission logic here
+    }
+
+    function goBack(pageId) {
+      if (pageId === 'imagePage') {
+        document.getElementById('imagePage').style.display = 'flex';
+        document.getElementById('videoCallSelectionPage').style.display = 'none';
+      } else if (pageId === 'videoCallSelectionPage') {
+        document.getElementById('videoCallSelectionPage').style.display = 'flex';
+        document.getElementById('paymentPage').style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
+  <script>
+    // Show image page
+    function showImagePage() {
+      document.querySelector('.container').style.display = 'none';
+      document.getElementById('imagePage').style.display = 'flex';
+      history.pushState({ page: 'imagePage' }, 'Image Page');
+    }
+
+    // Show video call selection page
+    function showVideoCallSelection() {
+      document.getElementById('imagePage').style.display = 'none';
+      document.getElementById('videoCallSelectionPage').style.display = 'block';
+      history.pushState({ page: 'videoCallSelectionPage' }, 'Video Call Selection');
+    }
+
+    // Select a video call package
+    function selectPackage(packageName) {
+      alert('You have selected ' + packageName);
+      document.getElementById('videoCallSelectionPage').style.display = 'none';
+      document.getElementById('paymentPage').style.display = 'block';
+      history.pushState({ page: 'paymentPage' }, 'Payment Page');
+    }
+
+    // Confirm entered details
+    function confirmDetails() {
+      var whatsappNumber = document.getElementById('whatsappNumber').value;
+      var paymentScreenshot = document.getElementById('paymentScreenshot').files[0];
+
+      if (whatsappNumber && paymentScreenshot) {
+        alert('Details Confirmed! WhatsApp: ' + whatsappNumber + ', Screenshot uploaded.');
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+
+    // Handle browser back button and page transitions
+    window.onpopstate = function(event) {
+      if (event.state && event.state.page) {
+        if (event.state.page === 'imagePage') {
+          document.getElementById('imagePage').style.display = 'flex';
+          document.getElementById('videoCallSelectionPage').style.display = 'none';
+          document.getElementById('paymentPage').style.display = 'none';
+        } else if (event.state.page === 'videoCallSelectionPage') {
+          document.getElementById('imagePage').style.display = 'none';
+          document.getElementById('videoCallSelectionPage').style.display = 'block';
+          document.getElementById('paymentPage').style.display = 'none';
+        } else if (event.state.page === 'paymentPage') {
+          document.getElementById('imagePage').style.display = 'none';
+          document.getElementById('videoCallSelectionPage').style.display = 'none';
+          document.getElementById('paymentPage').style.display = 'block';
+        }
+      }
+    };
+  </script>
+</body>
+</html>
